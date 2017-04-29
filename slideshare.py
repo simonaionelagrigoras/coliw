@@ -18,6 +18,21 @@ service_url_dict = {
     'check_favorite' : 'https://www.slideshare.net/api/%d/check_favorite' % API_VERSION
 }
 
+def get_slideshow(slideshow_url=None, **args):
+    """
+    Method to retrieve a slideshow, given an url
+    Requires: slideshow_url
+    """
+    if not slideshow_url:
+        print >> sys.stderr, 'slideshow_id is needed for this call.'
+        sys.exit(1)
+    return call_api('get_slideshow', slideshow_url=str(slideshow_url), **args)
+
+def get_user_tags(username = None, password = None):
+    if not username or not password:
+        print >> sys.stderr, 'slideshow_id is needed for this call.'
+        sys.exit(1)
+    return call_api('get_user_tags', username=str(username), password = str(password))
 
 def parsexml(xml):
         """
@@ -76,6 +91,8 @@ def call_api(service_url, **args):
 
 
 def main():
-    print("slideshow")
+    result = get_slideshow('https://www.slideshare.net/SimGrigoras/reed-solomon-explained-v1-0')
+    result = get_user_tags('SimGrigoras', 'Blackstone')
+    print(result)
 
 main()
